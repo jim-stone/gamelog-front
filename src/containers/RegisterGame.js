@@ -3,7 +3,9 @@ import SearchBar from 'material-ui-search-bar';
 import axios from 'axios';
 import Pagination from '@material-ui/lab/Pagination';
 
+
 import { styles } from '../theme';
+
 import GameCard from '../components/GameCard';
 
 
@@ -27,6 +29,8 @@ export default class RegisterGame extends Component {
         this.handlePageChange = this.handlePageChange.bind(this)
 
     };
+
+
 
     handleSubmit() {
         const partialName = this.state.gameName;
@@ -89,3 +93,4 @@ export default class RegisterGame extends Component {
         )
     }
 }
+
