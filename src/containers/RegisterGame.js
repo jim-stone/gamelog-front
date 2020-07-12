@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import SearchBar from 'material-ui-search-bar';
 import axios from 'axios';
 import Pagination from '@material-ui/lab/Pagination';
-
-
 import { styles } from '../theme';
 
 import GameCard from '../components/GameCard';

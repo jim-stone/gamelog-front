@@ -22,6 +22,7 @@ const localApi = {
     urlLogout: 'http://127.0.0.1:8000/api/auth/tokens/token/logout/',
     urlUser: 'http://127.0.0.1:8000/api/auth/users/me/',
     urlPlayerGames: 'http://127.0.0.1:8000/api/playergames/',
+    urlPostMyGames: 'http://127.0.0.1:8000/api/games/'
 }
 
 
