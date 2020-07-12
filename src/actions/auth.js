@@ -64,7 +64,7 @@ export const login = (loginData) => {
 
             })
 
-        loadUser();
+        // loadUser();
     };
 };
 

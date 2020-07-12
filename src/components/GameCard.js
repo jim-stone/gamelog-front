@@ -1,19 +1,20 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
+// import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import CheckCircle from '@material-ui/icons/CheckCircle';
-import SubjectIcon from '@material-ui/icons/Subject';
+// import SubjectIcon from '@material-ui/icons/Subject';
 import Popup from 'reactjs-popup';
+import { useHistory } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { addToMyGames } from '../actions/playergames'
-
+import { addToMyGames } from '../actions/playergames';
+import withDataPopup from '../hocs/withDataPopup';
 
 
 const useStyles = makeStyles({
@@ -39,7 +40,28 @@ export function GameCard(props) {
         description: game.description,
         thumb_url: game.thumb_url
     };
+    let history = useHistory();
 
+    // add Popup Management
+
+    const handleAddClick = () => {
+        addToMyGames(gameToSave);
+    };
+
+    const handleAddPopupClose = () => {
+        history.push("/my_games/");
+    }
+
+    const addToMyGamesTrigger = (
+        <Button size="small" color="inherit">
+            <CheckCircle />&nbsp;&nbsp;&nbsp;Add to My Games
+        </Button>
+    );
+
+    const addToMyGamesPopupTitle = "Woohoo!";
+    const addToMyGamesPopupContent = `Game ${game.name} successfully added to games you know.`;
+
+    // add Popup Management End
 
     return (
         <Card className={classes.root}>
@@ -55,7 +77,7 @@ export function GameCard(props) {
                 title="Contemplative Reptile"
             />
             <CardContent>
-                <Typography variant="body2" component="p">
+                <Typography variant="body2" component="div">
                     {game.description.replace(removeTagsRegex, "").slice(0, 200) + ' ...'}
                     <Popup
                         trigger={
@@ -65,18 +87,23 @@ export function GameCard(props) {
                         modal
                         position='top left'
                     >
-                        <Typography gutterBottom variant="h5" component="h2">
-                            {game.name}
-                        </Typography>
-                        <div>{game.description.replace(removeTagsRegex, "")}</div>
+                        <Fragment>
+                            <Typography gutterBottom variant="h5" component="h2">
+                                {game.name}
+                            </Typography>
+                            {game.description.replace(removeTagsRegex, "")}
+                        </Fragment>
                     </Popup>
                 </Typography>
             </CardContent>
             {/* </CardActionArea> */}
             <CardActions>
-                <Button size="small" color="inherit" onClick={() => addToMyGames(gameToSave)}>
-                    <CheckCircle />&nbsp;&nbsp;&nbsp;Add to My Games
-                </Button>
+                {withDataPopup(
+                    addToMyGamesTrigger,
+                    addToMyGamesPopupTitle,
+                    addToMyGamesPopupContent,
+                    handleAddClick,
+                    handleAddPopupClose)}
             </CardActions>
         </Card>
     );

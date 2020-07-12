@@ -1,7 +1,7 @@
 import { GET_MY_GAMES, LOG_API_ERROR, ADD_TO_MY_GAMES } from '../actions/actionTypes';
 
 const initialState = {
-    data: '',
+    data: [],
     isLoading: true,
     errors: {}
 }
@@ -14,7 +14,7 @@ export default function (state = initialState, action) {
 
 
         case ADD_TO_MY_GAMES:
-            return { ...state, isLoading: false }
+            return { ...state, data: [...state.data, action.payload], isLoading: false }
 
         case LOG_API_ERROR:
             return { ...state, errors: action.payload, isLoading: false }

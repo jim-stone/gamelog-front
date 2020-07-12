@@ -56,13 +56,12 @@ export const addToMyGames = (newGameData) => (dispatch, getState) => {
                 type: ADD_TO_MY_GAMES,
                 payload: res.data
             });
-            console.log("post fired: ", newGameData)
         }).catch(err => {
             dispatch({
                 type: LOG_API_ERROR,
                 payload: axiosErrorHandler(err)
             });
-            console.log(err.request);
-            console.log("post fired: ", newGameData, token);
+            // console.log(err.request);
+            // console.log("post fired: ", newGameData);
         })
 }
