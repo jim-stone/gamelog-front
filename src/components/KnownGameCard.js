@@ -10,11 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import CheckCircle from '@material-ui/icons/CheckCircle';
 // import SubjectIcon from '@material-ui/icons/Subject';
 import Popup from 'reactjs-popup';
-import { useHistory } from 'react-router-dom';
-
 import { connect } from 'react-redux';
-import { addToMyGames } from '../actions/playergames';
-import withDataPopup from '../hocs/withDataPopup';
+// import withDataPopup from '../hocs/withDataPopup';
 
 
 const useStyles = makeStyles({
@@ -28,40 +25,10 @@ const useStyles = makeStyles({
 });
 
 
-const removeTagsRegex = / *<[^)]*?> */g;
 
-export function GameCard(props) {
-    const { game, addToMyGames } = props;
-    game.description = game.description.replace(removeTagsRegex, "")
+export function KnownGameCard(props) {
+    const { game } = props;
     const classes = useStyles();
-    const gameToSave = {
-        bga_id: game.id,
-        name: game.name,
-        description: game.description,
-        thumb_url: game.thumb_url
-    };
-    let history = useHistory();
-
-    // add Popup Management
-
-    const handleAddClick = () => {
-        addToMyGames(gameToSave);
-    };
-
-    const handleAddPopupClose = () => {
-        history.push("/my_games/");
-    }
-
-    const addToMyGamesTrigger = (
-        <Button size="small" color="inherit">
-            <CheckCircle />&nbsp;&nbsp;&nbsp;Add to My Games
-        </Button>
-    );
-
-    const addToMyGamesPopupTitle = "Woohoo!";
-    const addToMyGamesPopupContent = `Game ${game.name} successfully added to games you know.`;
-
-    // add Popup Management End
 
     return (
         <Card className={classes.root}>
@@ -78,7 +45,7 @@ export function GameCard(props) {
             />
             <CardContent>
                 <Typography variant="body2" component="div">
-                    {game.description.replace(removeTagsRegex, "").slice(0, 200) + ' ...'}
+                    {game.description.slice(0, 200) + ' ...'}
                     <Popup
                         trigger={
                             <Button size="small" color="inherit">
@@ -91,19 +58,16 @@ export function GameCard(props) {
                             <Typography gutterBottom variant="h5" component="h2">
                                 {game.name}
                             </Typography>
-                            {game.description.replace(removeTagsRegex, "")}
+                            {game.description}
                         </Fragment>
                     </Popup>
                 </Typography>
             </CardContent>
             {/* </CardActionArea> */}
             <CardActions>
-                {withDataPopup(
-                    addToMyGamesTrigger,
-                    addToMyGamesPopupTitle,
-                    addToMyGamesPopupContent,
-                    handleAddClick,
-                    handleAddPopupClose)}
+                <Button size="small" color="inherit" onClick={() => console.log(game)}>
+                    <b>Delete game</b>
+                </Button>
             </CardActions>
         </Card>
     );
@@ -113,10 +77,10 @@ const mapStateToProps = (state) => {
     return state;
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        addToMyGames: (newGame) => dispatch(addToMyGames(newGame)),
-    }
-}
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         removeFromMyGames: (game) => dispatch(removeFromMyGames(game)),
+//     }
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(GameCard)
+export default connect(mapStateToProps, null)(KnownGameCard)

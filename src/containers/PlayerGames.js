@@ -1,7 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { getMyGames } from '../actions/playergames';
-import PlayerGame from './PlayerGame';
+// import PlayerGame from './PlayerGame';
+import KnownGameCard from '../components/KnownGameCard';
+
 
 class PlayerGames extends Component {
 
@@ -12,16 +14,12 @@ class PlayerGames extends Component {
     render() {
         const games = [...this.props.playerGames.data];
         const listItems = games.map((pg) =>
-            <li key={pg.id}>
-                <PlayerGame pg={pg} />
-            </li>
+            <KnownGameCard game={pg} key={pg.id} />
         );
         return (
             <Fragment>
-                <h3>Games you know:</h3>
-                <ul>
-                    {listItems}
-                </ul>
+                <h2>Games you know</h2>
+                {listItems}
             </Fragment>
         )
     }
